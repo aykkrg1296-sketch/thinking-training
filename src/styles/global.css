@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Rounded+Mplus+1c:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap');
+@import './variables.css';
+
+/* ===================================
+   Global Reset & Base
+   =================================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 方眼紙テクスチャ（控えめ） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================================
+   App Container (スマホファースト)
+   =================================== */
+
+.app-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  padding-top: calc(var(--safe-area-top) + var(--space-md));
+  padding-bottom: calc(var(--safe-area-bottom) + var(--space-lg));
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================================
+   Typography
+   =================================== */
+
+h1, h2, h3, h4 {
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+h1 { font-size: var(--font-size-3xl); }
+h2 { font-size: var(--font-size-2xl); }
+h3 { font-size: var(--font-size-xl); }
+h4 { font-size: var(--font-size-lg); }
+
+p {
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+}
+
+/* ===================================
+   Scrollbar (控えめ)
+   =================================== */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: var(--radius-pill);
+}
+
+/* ===================================
+   Selection
+   =================================== */
+
+::selection {
+  background: var(--color-main-light);
+  color: var(--text-primary);
+}
+
+/* ===================================
+   Focus (アクセシビリティ)
+   =================================== */
+
+:focus-visible {
+  outline: 3px solid var(--color-hint);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ===================================
+   Responsive (PC対応)
+   =================================== */
+
+@media (min-width: 768px) {
+  .app-container {
+    padding-top: var(--space-xl);
+  }
+}

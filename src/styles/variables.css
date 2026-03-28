@@ -1,0 +1,90 @@
+/* ===================================
+   Design Tokens — 思考の解像度
+   Duolingo式「意味のある配色」+ラボ感
+   =================================== */
+
+:root {
+  /* --- Background --- */
+  --bg-primary: #FFFBF5;
+  --bg-secondary: #FFF7ED;
+  --bg-card: #FFFFFF;
+  --bg-grid: rgba(220, 200, 170, 0.12);
+
+  /* --- Brand Colors (意味で使い分ける) --- */
+  --color-main: #FF8C42;       /* メイン: オレンジ — 温かさ・行動 */
+  --color-main-dark: #E67A30;  /* メインの影（3Dボタン底面） */
+  --color-main-light: #FFD4B0; /* メインの薄い版 */
+
+  --color-correct: #4ADE80;    /* 正解: グリーン */
+  --color-correct-dark: #22C55E;
+  --color-correct-bg: #F0FDF4;
+
+  --color-hint: #60A5FA;       /* ヒント: ブルー */
+  --color-hint-dark: #3B82F6;
+  --color-hint-bg: #EFF6FF;
+
+  --color-accent: #A78BFA;     /* アクセント: パープル — 発見・ひらめき */
+  --color-accent-dark: #8B5CF6;
+  --color-accent-bg: #F5F3FF;
+
+  --color-streak: #FBBF24;     /* 継続: イエロー */
+  --color-streak-dark: #F59E0B;
+
+  /* --- Module Colors (5モジュール各色) --- */
+  --module-1: #FF8C42;  /* 抽象化ラダー: オレンジ */
+  --module-2: #4ADE80;  /* 本質キャッチ: グリーン */
+  --module-3: #60A5FA;  /* 目的と手段: ブルー */
+  --module-4: #A78BFA;  /* 言語化チャレンジ: パープル */
+  --module-5: #F472B6;  /* 分解ドリル: ピンク */
+
+  /* --- Text --- */
+  --text-primary: #1C1917;
+  --text-secondary: #57534E;
+  --text-tertiary: #A8A29E;
+  --text-inverse: #FFFFFF;
+
+  /* --- Radius (ポップ・かわいい) --- */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* --- Shadow (ふわっと + 3D) --- */
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 6px 20px rgba(0, 0, 0, 0.1);
+  --shadow-button-3d: 0 4px 0 var(--color-main-dark);
+
+  /* --- Spacing --- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* --- Font --- */
+  --font-main: 'Nunito', 'Rounded Mplus 1c', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 36px;
+
+  /* --- Animation --- */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* --- Layout --- */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --max-width: 480px;
+  --min-tap-size: 44px;
+}

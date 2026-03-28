@@ -1,0 +1,32 @@
+/* ===================================
+   Back Button — SafeArea対応
+   =================================== */
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  min-height: var(--min-tap-size);
+  min-width: var(--min-tap-size);
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--duration-fast);
+  margin-left: -12px;
+}
+
+.backButton:active {
+  color: var(--text-primary);
+}
+
+.arrow {
+  font-size: 18px;
+  line-height: 1;
+}
