@@ -15,6 +15,7 @@ export function TextInput({
   maxLength = 200,
 }: TextInputProps) {
   const [value, setValue] = useState('');
+  const [lastEnterTime, setLastEnterTime] = useState<number>(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea
@@ -35,9 +36,14 @@ export function TextInput({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit();
+    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+      const now = Date.now();
+      if (now - lastEnterTime < 500) {
+        e.preventDefault();
+        handleSubmit();
+      } else {
+        setLastEnterTime(now);
+      }
     }
   };
 

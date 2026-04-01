@@ -5,6 +5,7 @@ import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
 import { modules } from '../../data/modules';
+import { analyzeText } from '../../utils/analyzeText';
 import type { UserProgress, ModuleId, ThinkingType, Note } from '../../types';
 import styles from './QuestionPage.module.css';
 
@@ -21,7 +22,7 @@ interface ChatMessage {
   text: string;
 }
 
-export function QuestionPage({ completeQuestion, addNote }: Props) {
+export function QuestionPage({ completeQuestion, addNote: _addNote }: Props) {
   const { moduleId, questionId } = useParams<{ moduleId: string; questionId: string }>();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentStep] = useState(0);
@@ -30,7 +31,7 @@ export function QuestionPage({ completeQuestion, addNote }: Props) {
   const [showSample, setShowSample] = useState(false);
   const [, setShowExplanation] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [noteText, setNoteText] = useState('');
+  const [copied, setCopied] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const mod = modules.find(m => m.id === moduleId);
@@ -112,14 +113,24 @@ export function QuestionPage({ completeQuestion, addNote }: Props) {
     );
   };
 
-  const handleSaveNote = () => {
-    if (noteText.trim()) {
-      addNote({
-        text: noteText.trim(),
-        questionId: question.questionId,
-        moduleId: mod.id,
-      });
-      setNoteText('');
+  const handleShareX = () => {
+    const shareText = `Q. ${step.prompt}\n\n私の答え:「${answers[answers.length - 1] || ''}」\n\n#思考の解像度 #思考トレーニング`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+    window.open(url, '_blank', 'noopener');
+  };
+
+  const handleShareNative = async () => {
+    const shareText = `Q. ${step.prompt}\n\n私の答え:「${answers[answers.length - 1] || ''}」\n\n#思考の解像度 #思考トレーニング`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ text: shareText });
+      } catch {
+        // キャンセルされた場合は何もしない
+      }
+    } else {
+      await navigator.clipboard.writeText(shareText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -182,41 +193,30 @@ export function QuestionPage({ completeQuestion, addNote }: Props) {
         </div>
       )}
 
-      {isComplete && (
-        <motion.div
-          className={styles.noteArea}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className={styles.noteLabel}>📝 気づいたことがあればメモしよう</div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <textarea
-              value={noteText}
-              onChange={e => setNoteText(e.target.value)}
-              placeholder="ここにメモ..."
-              style={{
-                flex: 1,
-                padding: '10px 14px',
-                border: '2px solid #E7E5E4',
-                borderRadius: '12px',
-                fontFamily: 'var(--font-main)',
-                fontSize: '14px',
-                resize: 'none',
-                minHeight: '44px',
-              }}
-              rows={2}
-            />
-            <Button
-              variant="secondary"
-              size="small"
-              onClick={handleSaveNote}
-              disabled={!noteText.trim()}
-            >
-              保存
-            </Button>
-          </div>
-        </motion.div>
-      )}
+      {isComplete && (() => {
+        const { insight } = analyzeText(answers);
+        return (
+          <motion.div
+            className={styles.shareArea}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className={styles.insightBadge}>
+              <span className={styles.insightIcon}>🧠</span>
+              <span className={styles.insightText}>{insight}</span>
+              <span className={styles.insightSub}>自分説明書に記録されました</span>
+            </div>
+            <div className={styles.shareButtons}>
+              <button className={styles.shareButtonX} onClick={handleShareX}>
+                𝕏 でシェア
+              </button>
+              <button className={styles.shareButtonNative} onClick={handleShareNative}>
+                {copied ? 'コピーしました ✓' : 'シェア / コピー'}
+              </button>
+            </div>
+          </motion.div>
+        );
+      })()}
     </div>
   );
 }
